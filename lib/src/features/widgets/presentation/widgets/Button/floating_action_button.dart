@@ -5,7 +5,7 @@ class FloatingActionButtonExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: FloatingActionButtonExampleWidget());
+    return const FloatingActionButtonExampleWidget();
   }
 }
 
@@ -51,6 +51,7 @@ class _FloatingActionButtonExampleWidgetState
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 FloatingActionButton.small(
+                  heroTag: null,
                   foregroundColor: _selectedIndex == 0
                       ? colorScheme.onPrimary
                       : colorScheme.onSurface,
@@ -73,6 +74,7 @@ class _FloatingActionButtonExampleWidgetState
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 FloatingActionButton.small(
+                  heroTag: null,
                   foregroundColor: _selectedIndex == 1
                       ? colorScheme.onPrimary
                       : colorScheme.onSecondaryContainer,
@@ -95,6 +97,7 @@ class _FloatingActionButtonExampleWidgetState
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 FloatingActionButton.small(
+                  heroTag: null,
                   foregroundColor: _selectedIndex == 2
                       ? colorScheme.onPrimary
                       : colorScheme.onTertiaryContainer,
@@ -117,6 +120,7 @@ class _FloatingActionButtonExampleWidgetState
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 FloatingActionButton.small(
+                  heroTag: null,
                   foregroundColor: _selectedIndex == 3
                       ? colorScheme.onPrimary
                       : colorScheme.onInverseSurface,

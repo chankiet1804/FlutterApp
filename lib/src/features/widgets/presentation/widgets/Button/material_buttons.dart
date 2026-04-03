@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/features/widgets/presentation/widgets/Button/floating_action_button.dart';
 import 'package:flutter_app/src/features/widgets/presentation/widgets/Button/floating_button.dart';
+import 'package:flutter_app/src/features/widgets/presentation/widgets/Button/icon_buttons.dart';
 
 class MaterialButtons extends StatelessWidget {
   const MaterialButtons({super.key});
@@ -37,6 +38,7 @@ class ButtonTypesExample extends StatelessWidget {
               ),
               CustomFloatingActionButton(),
               FloatingActionButtonExampleWidget(),
+              IconButtonExample(),
             ],
           ),
         );

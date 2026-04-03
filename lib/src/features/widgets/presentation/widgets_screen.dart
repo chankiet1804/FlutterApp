@@ -9,13 +9,24 @@ class WidgetsScreen extends StatelessWidget {
     List<Widget> data = [
       Card(
         child: ListTile(
-          leading: Icon(Icons.width_normal),
+          leading: Icon(Icons.check_box_outline_blank),
           title: Text('Buttons'),
           subtitle: Text('Tap to open button screen'),
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute<void>(builder: (context) => const ButtonScreen()),
           ),
+        ),
+      ),
+      Card(
+        child: ListTile(
+          leading: Icon(Icons.moving),
+          title: Text('Progress Indicators'),
+          subtitle: Text('Tap to open progress indicators screen'),
+          // onTap: () => Navigator.push(
+          //   context,
+          //   MaterialPageRoute<void>(builder: (context) => const ProgressIndicatorsScreen()),
+          // ),
         ),
       ),
     ];
