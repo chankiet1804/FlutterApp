@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/features/widgets/presentation/button_screen.dart';
+import 'package:flutter_app/src/features/widgets/presentation/progress_indicator_screen.dart';
 
 class WidgetsScreen extends StatelessWidget {
   const WidgetsScreen({super.key});
@@ -23,10 +24,12 @@ class WidgetsScreen extends StatelessWidget {
           leading: Icon(Icons.moving),
           title: Text('Progress Indicators'),
           subtitle: Text('Tap to open progress indicators screen'),
-          // onTap: () => Navigator.push(
-          //   context,
-          //   MaterialPageRoute<void>(builder: (context) => const ProgressIndicatorsScreen()),
-          // ),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute<void>(
+              builder: (context) => const ProgressIndicatorScreen(),
+            ),
+          ),
         ),
       ),
     ];
