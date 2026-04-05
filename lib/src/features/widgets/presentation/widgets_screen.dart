@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/features/widgets/presentation/modal_bottom_sheet_screen.dart';
 import 'package:flutter_app/src/features/widgets/presentation/button_screen.dart';
 import 'package:flutter_app/src/features/widgets/presentation/progress_indicator_screen.dart';
 
@@ -28,6 +29,19 @@ class WidgetsScreen extends StatelessWidget {
             context,
             MaterialPageRoute<void>(
               builder: (context) => const ProgressIndicatorScreen(),
+            ),
+          ),
+        ),
+      ),
+      Card(
+        child: ListTile(
+          leading: Icon(Icons.border_bottom_sharp),
+          title: Text('BottomSheet'),
+          subtitle: Text('Tap to open bottom sheet screen'),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute<void>(
+              builder: (context) => const ModalBottomSheetScreen(),
             ),
           ),
         ),
