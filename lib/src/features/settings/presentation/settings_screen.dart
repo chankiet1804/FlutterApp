@@ -1,3 +1,4 @@
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/features/settings/presentation/account_screen.dart';
 
@@ -15,12 +16,33 @@ class SettingsScreen extends StatelessWidget {
               leading: Icon(Icons.person),
               title: Text('Account'),
               subtitle: Text('This is an account setting'),
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (context) => const AccountScreen(title: 'Account'),
-                ),
-              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<ProfileScreen>(
+                    builder: (context) => ProfileScreen(
+                      appBar: AppBar(title: const Text('User Profile')),
+                      actions: [
+                        SignedOutAction((context) {
+                          Navigator.of(context).pop();
+                        }),
+                      ],
+                      children: [
+                        const Divider(),
+                        SizedBox(
+                          width: 48,
+                          height: 48,
+                          child: AspectRatio(
+                            aspectRatio: 1,
+                            child: Icon(Icons.email_rounded, size: 32),
+                          ),
+                        ),
+                        const Divider(),
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
           ),
           Card(
