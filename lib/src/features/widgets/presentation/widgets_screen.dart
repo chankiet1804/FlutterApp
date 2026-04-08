@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/features/widgets/presentation/firebase_chatbot_screen.dart';
 import 'package:flutter_app/src/features/widgets/presentation/modal_bottom_sheet_screen.dart';
 import 'package:flutter_app/src/features/widgets/presentation/button_screen.dart';
 import 'package:flutter_app/src/features/widgets/presentation/progress_indicator_screen.dart';
@@ -43,6 +44,17 @@ class WidgetsScreen extends StatelessWidget {
             MaterialPageRoute<void>(
               builder: (context) => const ModalBottomSheetScreen(),
             ),
+          ),
+        ),
+      ),
+      Card(
+        child: ListTile(
+          leading: Icon(Icons.chat_bubble_outline),
+          title: Text('Chatbot Screen'),
+          subtitle: Text('Tap to open firebase chatbot screen'),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute<void>(builder: (context) => const ChatPage()),
           ),
         ),
       ),
