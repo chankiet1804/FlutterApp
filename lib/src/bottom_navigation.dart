@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/state/counter_provider.dart';
+import 'package:provider/provider.dart';
 import 'features/widgets/presentation/widgets_screen.dart';
 import 'features/home/presentation/home_screen.dart';
 import 'features/settings/presentation/settings_screen.dart';
@@ -23,6 +25,41 @@ class _BottomNavigationState extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Flutter App'),
+        backgroundColor: context
+            .watch<CounterProvider>()
+            .color, // Lấy màu từ CounterProvider
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          FloatingActionButton(
+            heroTag: 'inc',
+            onPressed: () {
+              context.read<CounterProvider>().add();
+            },
+            child: const Icon(Icons.add),
+          ),
+          const SizedBox(width: 12),
+          FloatingActionButton(
+            heroTag: 'dec',
+            onPressed: () {
+              context.read<CounterProvider>().remove();
+            },
+            child: const Icon(Icons.remove),
+          ),
+          const SizedBox(width: 12),
+          FloatingActionButton(
+            heroTag: 'changeColor',
+            onPressed: () {
+              context.read<CounterProvider>().changeColor();
+            },
+            child: const Icon(Icons.color_lens),
+          ),
+        ],
+      ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: currentPageIndex,
         onDestinationSelected: (int index) {

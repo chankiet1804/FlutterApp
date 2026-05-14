@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/state/counter_provider.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -11,7 +13,16 @@ class HomeScreen extends StatelessWidget {
       margin: const EdgeInsets.all(8.0),
       child: SizedBox.expand(
         child: Center(
-          child: Text('Home page', style: theme.textTheme.titleLarge),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Home page', style: theme.textTheme.titleLarge),
+              Text(
+                'Counter get by context.watch: ${context.watch<CounterProvider>().counter}',
+                style: theme.textTheme.bodyMedium,
+              ),
+            ],
+          ),
         ),
       ),
     );
