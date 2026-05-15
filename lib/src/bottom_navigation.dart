@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/state/counter_provider.dart';
 import 'package:provider/provider.dart';
-import 'features/widgets/presentation/widgets_screen.dart';
+import 'features/widget_catalog/presentation/screens/widgets_screen.dart';
 import 'features/home/presentation/home_screen.dart';
 import 'features/settings/presentation/settings_screen.dart';
 

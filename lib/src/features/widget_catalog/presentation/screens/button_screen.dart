@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/src/features/widgets/presentation/widgets/Button/cupertino_buttons.dart';
-import 'package:flutter_app/src/features/widgets/presentation/widgets/Button/material_buttons.dart';
+import 'package:flutter_app/src/features/widget_catalog/presentation/widgets/Button/cupertino_buttons.dart';
+import 'package:flutter_app/src/features/widget_catalog/presentation/widgets/Button/material_buttons.dart';
 
 class ButtonScreen extends StatelessWidget {
   const ButtonScreen({super.key});

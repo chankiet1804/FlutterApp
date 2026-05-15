@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/src/features/widgets/presentation/firebase_chatbot_screen.dart';
-import 'package:flutter_app/src/features/widgets/presentation/modal_bottom_sheet_screen.dart';
-import 'package:flutter_app/src/features/widgets/presentation/button_screen.dart';
-import 'package:flutter_app/src/features/widgets/presentation/progress_indicator_screen.dart';
+import 'package:flutter_app/src/features/widget_catalog/presentation/screens/firebase_chatbot_screen.dart';
+import 'package:flutter_app/src/features/widget_catalog/presentation/screens/modal_bottom_sheet_screen.dart';
+import 'package:flutter_app/src/features/widget_catalog/presentation/screens/button_screen.dart';
+import 'package:flutter_app/src/features/widget_catalog/presentation/screens/progress_indicator_screen.dart';
+import 'package:flutter_app/src/features/widget_catalog/presentation/screens/http_screen.dart';
 
 class WidgetsScreen extends StatelessWidget {
   const WidgetsScreen({super.key});
@@ -55,6 +56,17 @@ class WidgetsScreen extends StatelessWidget {
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute<void>(builder: (context) => const ChatPage()),
+          ),
+        ),
+      ),
+      Card(
+        child: ListTile(
+          leading: Icon(Icons.network_check),
+          title: Text('HTTP Screen'),
+          subtitle: Text('Tap to open HTTP screen'),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute<void>(builder: (context) => const HttpScreen()),
           ),
         ),
       ),

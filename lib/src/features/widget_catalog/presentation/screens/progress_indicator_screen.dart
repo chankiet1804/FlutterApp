@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/src/features/widgets/presentation/widgets/ProgressIndicator/circle_progress_indicator.dart';
-import 'package:flutter_app/src/features/widgets/presentation/widgets/ProgressIndicator/linear_progress_indicator.dart';
-import 'package:flutter_app/src/features/widgets/presentation/widgets/ProgressIndicator/synchronization_indicator.dart';
+import 'package:flutter_app/src/features/widget_catalog/presentation/widgets/ProgressIndicator/circle_progress_indicator.dart';
+import 'package:flutter_app/src/features/widget_catalog/presentation/widgets/ProgressIndicator/linear_progress_indicator.dart';
+import 'package:flutter_app/src/features/widget_catalog/presentation/widgets/ProgressIndicator/synchronization_indicator.dart';
 
 class ProgressIndicatorScreen extends StatelessWidget {
   const ProgressIndicatorScreen({super.key});
