@@ -12,7 +12,6 @@ class AlbumRepository {
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      print('Response body: ${response.body}');
       return Album.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
     } else {
       // If the server did not return a 200 OK response,

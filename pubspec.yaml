@@ -45,6 +45,7 @@ dependencies:
   path_provider: ^2.1.5
   provider: ^6.1.5+1
   http: ^1.6.0
+  infinite_scroll_pagination: ^5.1.1
 
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/features/widget_catalog/presentation/screens/firebase_chatbot_screen.dart';
+import 'package:flutter_app/src/features/widget_catalog/presentation/screens/list_news_screen.dart';
 import 'package:flutter_app/src/features/widget_catalog/presentation/screens/modal_bottom_sheet_screen.dart';
 import 'package:flutter_app/src/features/widget_catalog/presentation/screens/button_screen.dart';
 import 'package:flutter_app/src/features/widget_catalog/presentation/screens/progress_indicator_screen.dart';
@@ -67,6 +68,19 @@ class WidgetsScreen extends StatelessWidget {
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute<void>(builder: (context) => const HttpScreen()),
+          ),
+        ),
+      ),
+      Card(
+        child: ListTile(
+          leading: Icon(Icons.newspaper),
+          title: Text('List News Screen'),
+          subtitle: Text('Tap to open list news screen'),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute<void>(
+              builder: (context) => const ListNewsScreen(),
+            ),
           ),
         ),
       ),
