@@ -1,19 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CounterProvider extends ChangeNotifier {
-  int _counter = 10;
+  late int _counter = 0;
   Color color = Colors.green;
 
   int get counter => _counter;
 
-  void add() {
-    _counter++;
+  Future<void> loadCounter() async {
+    final asyncPrefs = SharedPreferencesAsync();
+    _counter = await asyncPrefs.getInt('counter') ?? 0;
     notifyListeners();
   }
 
-  void remove() {
+  Future<void> add() async {
+    final asyncPrefs = SharedPreferencesAsync();
+    _counter++;
+    notifyListeners();
+    await asyncPrefs.setInt('counter', _counter);
+  }
+
+  Future<void> remove() async {
+    final asyncPrefs = SharedPreferencesAsync();
     _counter--;
     notifyListeners();
+    await asyncPrefs.setInt('counter', _counter);
   }
 
   void changeColor() {

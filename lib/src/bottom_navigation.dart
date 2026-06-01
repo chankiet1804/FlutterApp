@@ -37,16 +37,16 @@ class _BottomNavigationState extends State<BottomNavigation> {
         children: [
           FloatingActionButton(
             heroTag: 'inc',
-            onPressed: () {
-              context.read<CounterProvider>().add();
+            onPressed: () async {
+              await context.read<CounterProvider>().add();
             },
             child: const Icon(Icons.add),
           ),
           const SizedBox(width: 12),
           FloatingActionButton(
             heroTag: 'dec',
-            onPressed: () {
-              context.read<CounterProvider>().remove();
+            onPressed: () async {
+              await context.read<CounterProvider>().remove();
             },
             child: const Icon(Icons.remove),
           ),

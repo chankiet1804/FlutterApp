@@ -12,7 +12,11 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
     ChangeNotifierProvider(
-      create: (context) => CounterProvider(),
+      create: (context) {
+        final provider = CounterProvider();
+        provider.loadCounter();
+        return provider;
+      },
       child: const MyApp(clientId: clientId),
     ),
   );
