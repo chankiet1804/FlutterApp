@@ -21,21 +21,21 @@ class AuthGate extends StatelessWidget {
               EmailAuthProvider(),
               GoogleProvider(clientId: clientId),
             ],
+            // Giới hạn bề rộng form để không bị kéo dài xấu trên màn rộng
+            maxWidth: 400,
+            // Hiện nút con mắt ẩn/hiện mật khẩu
+            showPasswordVisibilityToggle: true,
+            // Nút "Đăng nhập" dạng nền đặc (filled) thay vì viền mặc định
+            styles: const {
+              EmailFormStyle(signInButtonVariant: ButtonVariant.filled),
+            },
             headerBuilder: (context, constraints, shrinkOffset) {
               return Container(
                 margin: const EdgeInsets.only(top: 56.0),
                 child: AspectRatio(
                   aspectRatio: 1,
-                  child: Image.asset('assets/icons/email.png'),
+                  child: const FlutterLogo(size: 120),
                 ),
-              );
-            },
-            subtitleBuilder: (context, action) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: action == AuthAction.signIn
-                    ? const Text('Welcome to FlutterFire, please sign in!')
-                    : const Text('Welcome to Flutterfire, please sign up!'),
               );
             },
             footerBuilder: (context, action) {
@@ -53,7 +53,7 @@ class AuthGate extends StatelessWidget {
                 padding: const EdgeInsets.all(20),
                 child: AspectRatio(
                   aspectRatio: 1,
-                  child: Image.asset('assets/icons/email.png'),
+                  child: const FlutterLogo(size: 120),
                 ),
               ); // To here.
             },

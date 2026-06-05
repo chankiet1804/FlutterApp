@@ -25,26 +25,7 @@ class SettingsScreen extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute<ProfileScreen>(
-                        builder: (context) => ProfileScreen(
-                          appBar: AppBar(title: const Text('User Profile')),
-                          actions: [
-                            SignedOutAction((context) {
-                              Navigator.of(context).pop();
-                            }),
-                          ],
-                          children: [
-                            const Divider(),
-                            SizedBox(
-                              width: 48,
-                              height: 48,
-                              child: AspectRatio(
-                                aspectRatio: 1,
-                                child: Icon(Icons.email_rounded, size: 32),
-                              ),
-                            ),
-                            const Divider(),
-                          ],
-                        ),
+                        builder: (context) => const AccountScreen(),
                       ),
                     );
                   },
@@ -55,12 +36,12 @@ class SettingsScreen extends StatelessWidget {
                   leading: Icon(Icons.dark_mode),
                   title: Text('Theme'),
                   subtitle: Text('This is a theme setting'),
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (context) => const AccountScreen(title: 'Theme'),
-                    ),
-                  ),
+                  // onTap: () => Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute<void>(
+                  //     builder: (context) => const AccountScreen(title: 'Theme'),
+                  //   ),
+                  // ),
                 ),
               ),
               Card(
@@ -68,13 +49,13 @@ class SettingsScreen extends StatelessWidget {
                   leading: Icon(Icons.language),
                   title: Text('Language'),
                   subtitle: Text('This is a language setting'),
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (context) =>
-                          const AccountScreen(title: 'Language'),
-                    ),
-                  ),
+                  // onTap: () => Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute<void>(
+                  //     builder: (context) =>
+                  //         const AccountScreen(title: 'Language'),
+                  //   ),
+                  // ),
                 ),
               ),
               const SizedBox(height: 12),
