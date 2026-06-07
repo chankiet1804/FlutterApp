@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/state/counter_provider.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +11,7 @@ const clientId =
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   runApp(
     ChangeNotifierProvider(
       create: (context) {
@@ -20,4 +22,10 @@ void main() async {
       child: const MyApp(clientId: clientId),
     ),
   );
+}
+
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print('Background message: ${message.messageId}');
 }

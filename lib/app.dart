@@ -1,11 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/services/fcm_service.dart';
 
 import 'auth_gate.dart';
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key, required this.clientId});
 
   final String clientId;
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    FCMService.init(); // ← Token + foreground
+    FCMService.setupInteractedMessage(); // ← Tap interaction
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +58,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: AuthGate(clientId: clientId),
+      home: AuthGate(clientId: widget.clientId),
     );
   }
 }
