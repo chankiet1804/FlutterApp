@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/features/home/presentation/widgets/welcome_banner.dart';
+import 'package:flutter_app/src/services/user_service.dart';
 import 'package:flutter_app/src/state/counter_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -28,6 +29,14 @@ class HomeScreen extends StatelessWidget {
                     Text(
                       'Counter get by context.watch: ${context.watch<CounterProvider>().counter}',
                       style: theme.textTheme.bodyMedium,
+                    ),
+                    ElevatedButton(
+                      onPressed: () => UserService().set_user(),
+                      child: const Text('Set User'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () => UserService().get_users(),
+                      child: const Text('Get Users'),
                     ),
                   ],
                 ),

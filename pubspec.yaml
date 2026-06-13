@@ -48,6 +48,7 @@ dependencies:
   infinite_scroll_pagination: ^5.1.1
   shared_preferences: ^2.5.5
   firebase_messaging: ^16.3.0
+  cloud_firestore: ^6.5.0
 
 dev_dependencies:
   flutter_test:
