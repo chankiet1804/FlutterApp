@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/features/widget_catalog/presentation/screens/animations_screen.dart';
 import 'package:flutter_app/src/features/widget_catalog/presentation/screens/firebase_chatbot_screen.dart';
+import 'package:flutter_app/src/features/widget_catalog/presentation/screens/firestore_screen.dart';
 import 'package:flutter_app/src/features/widget_catalog/presentation/screens/list_news_screen.dart';
 import 'package:flutter_app/src/features/widget_catalog/presentation/screens/modal_bottom_sheet_screen.dart';
 import 'package:flutter_app/src/features/widget_catalog/presentation/screens/button_screen.dart';
@@ -94,6 +95,19 @@ class WidgetsScreen extends StatelessWidget {
             context,
             MaterialPageRoute<void>(
               builder: (context) => const AnimationsScreen(),
+            ),
+          ),
+        ),
+      ),
+      Card(
+        child: ListTile(
+          leading: Icon(Icons.miscellaneous_services),
+          title: Text('Firestore Screen'),
+          subtitle: Text('Tap to open firestore screen'),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute<void>(
+              builder: (context) => const FirestoreScreen(),
             ),
           ),
         ),

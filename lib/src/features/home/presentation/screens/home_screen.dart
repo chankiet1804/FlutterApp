@@ -35,8 +35,8 @@ class HomeScreen extends StatelessWidget {
                       child: const Text('Set User'),
                     ),
                     ElevatedButton(
-                      onPressed: () => UserService().get_users(),
-                      child: const Text('Get Users'),
+                      onPressed: () => UserService().get_city(),
+                      child: const Text('Get City'),
                     ),
                   ],
                 ),

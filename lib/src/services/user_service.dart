@@ -18,11 +18,14 @@ class UserService {
     }
   }
 
-  Future<void> get_users() async {
+  Future<void> get_city() async {
     try {
-      final snapshot = await db.collection("users").get();
-      for (var doc in snapshot.docs) {
-        print("✅ ${doc.id} => ${doc.data()}");
+      final docRef = db.collection("cities").doc("SF");
+      final doc = await docRef.get();
+      if (doc.exists) {
+        print('✅ Document data: ${doc.data()}');
+      } else {
+        print('❌ Document does not exist');
       }
     } catch (e) {
       print('❌ Lỗi đọc Firestore: $e');
