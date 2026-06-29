@@ -3,12 +3,31 @@ import 'package:firebase_auth/firebase_auth.dart'
 import 'package:firebase_ui_auth/firebase_ui_auth.dart'; // And this import
 import 'package:firebase_ui_oauth_google/firebase_ui_oauth_google.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/models/app_user.dart';
+import 'package:flutter_app/src/services/user_service.dart';
 import 'package:flutter_app/src/widgets/bottom_navigation.dart';
 
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key, required this.clientId});
 
   final String clientId;
+
+  /// Build [AppUser] từ Firebase [User].
+  ///
+  /// Dùng `metadata.creationTime` cho `createdAt` để giá trị này ổn định
+  /// (không bị đặt lại mỗi lần đăng nhập).
+  AppUser _buildAppUser(User user) {
+    final email = user.email ?? '';
+    final fallbackName = email.contains('@') ? email.split('@').first : email;
+    return AppUser(
+      uid: user.uid,
+      email: email,
+      username: fallbackName,
+      displayName: user.displayName ?? fallbackName,
+      photoURL: user.photoURL,
+      createdAt: user.metadata.creationTime ?? DateTime.now(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +39,22 @@ class AuthGate extends StatelessWidget {
             providers: [
               EmailAuthProvider(),
               GoogleProvider(clientId: clientId),
+            ],
+            actions: [
+              // Đăng nhập thành công (email/password hoặc Google).
+              AuthStateChangeAction<SignedIn>((context, state) {
+                final user = state.user;
+                if (user != null) {
+                  UserService().setAppUser(_buildAppUser(user));
+                }
+              }),
+              // Tạo tài khoản mới thành công.
+              AuthStateChangeAction<UserCreated>((context, state) {
+                final user = state.credential.user;
+                if (user != null) {
+                  UserService().setAppUser(_buildAppUser(user));
+                }
+              }),
             ],
             // Giới hạn bề rộng form để không bị kéo dài xấu trên màn rộng
             maxWidth: 400,

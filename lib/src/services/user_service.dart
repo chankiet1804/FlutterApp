@@ -1,8 +1,34 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../models/app_user.dart';
+
 class UserService {
   final FirebaseFirestore db = FirebaseFirestore.instance;
+
+  /// Lưu thông tin user khi đăng nhập hoặc đăng ký.
+  ///
+  /// Dùng `merge: true` để chỉ cập nhật/thêm các field trong [AppUser]
+  /// mà không ghi đè toàn bộ document (giữ lại các field đã có sẵn).
+  ///
+  /// Các field có giá trị `null` sẽ được lọc bỏ trước khi ghi, tránh việc
+  /// `merge: true` ghi đè một field đang có dữ liệu thành `null`.
+  Future<void> setAppUser(AppUser user) async {
+    try {
+      // Lọc bỏ các entry null để không ghi đè dữ liệu cũ trên Firestore.
+      final data = <String, dynamic>{}
+        ..addAll(user.toMap())
+        ..removeWhere((key, value) => value == null);
+
+      await db
+          .collection("users")
+          .doc(user.uid)
+          .set(data, SetOptions(merge: true));
+      print('✅ User set successfully');
+    } catch (e) {
+      print('❌ Lỗi ghi Firestore: $e');
+    }
+  }
 
   Future<void> set_user() async {
     final user = FirebaseAuth.instance.currentUser;

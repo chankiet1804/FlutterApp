@@ -4,7 +4,7 @@ import 'package:flutter_app/src/state/counter_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_app/src/screens/app.dart';
 import 'package:firebase_core/firebase_core.dart';
-import '../../firebase_options.dart';
+import 'firebase_options.dart';
 
 const clientId =
     '239460398195-s7iasek07mon8gnt8b1ubl6pb5qp1ih5.apps.googleusercontent.com';

@@ -7,13 +7,8 @@ class AccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Dùng appBar của chính ProfileScreen thay vì bọc thêm Scaffold (tránh lồng 2 Scaffold)
     return ProfileScreen(
-      appBar: AppBar(
-        title: const Text('Account Settings'),
-        centerTitle: true,
-      ),
-      // (A) Avatar tự dựng: viền gradient + đổ bóng, hiện ảnh nếu có, nếu không thì chữ cái đầu
+      appBar: AppBar(title: const Text('Account Settings'), centerTitle: true),
       avatar: _buildAvatar(context),
       // Hỏi xác nhận trước khi xoá tài khoản (hành động không hoàn tác được)
       showDeleteConfirmationDialog: true,
