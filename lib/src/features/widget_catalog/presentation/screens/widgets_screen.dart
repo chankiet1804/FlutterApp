@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/features/chat/presentation/screens/chat_list_screen.dart';
 import 'package:flutter_app/src/features/widget_catalog/presentation/screens/animations_screen.dart';
 import 'package:flutter_app/src/features/widget_catalog/presentation/screens/firebase_chatbot_screen.dart';
 import 'package:flutter_app/src/features/widget_catalog/presentation/screens/firestore_screen.dart';
@@ -14,6 +15,19 @@ class WidgetsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> data = [
+      Card(
+        child: ListTile(
+          leading: const Icon(Icons.chat),
+          title: const Text('Chat'),
+          subtitle: const Text('Tap to open chat screen'),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute<void>(
+              builder: (context) => const ChatListScreen(),
+            ),
+          ),
+        ),
+      ),
       Card(
         child: ListTile(
           leading: Icon(Icons.check_box_outline_blank),
