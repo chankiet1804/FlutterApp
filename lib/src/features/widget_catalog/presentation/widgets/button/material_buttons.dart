@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/src/features/widget_catalog/presentation/widgets/Button/floating_action_button.dart';
-import 'package:flutter_app/src/features/widget_catalog/presentation/widgets/Button/floating_button.dart';
-import 'package:flutter_app/src/features/widget_catalog/presentation/widgets/Button/icon_buttons.dart';
+import 'package:flutter_app/src/features/widget_catalog/presentation/widgets/button/floating_action_button.dart';
+import 'package:flutter_app/src/features/widget_catalog/presentation/widgets/button/floating_button.dart';
+import 'package:flutter_app/src/features/widget_catalog/presentation/widgets/button/icon_buttons.dart';
 
 class MaterialButtons extends StatelessWidget {
   const MaterialButtons({super.key});

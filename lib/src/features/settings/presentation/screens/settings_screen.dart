@@ -1,6 +1,6 @@
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/src/features/settings/presentation/account_screen.dart';
+import 'package:flutter_app/src/features/settings/presentation/screens/account_screen.dart';
 import 'package:flutter_app/src/state/counter_provider.dart';
 import 'package:provider/provider.dart';
 

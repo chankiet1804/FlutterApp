@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/src/features/widget_catalog/presentation/widgets/Animations/animated_container.dart';
-import 'package:flutter_app/src/features/widget_catalog/presentation/widgets/Animations/animated_logo_builder.dart';
-import 'package:flutter_app/src/features/widget_catalog/presentation/widgets/Animations/animated_logo_widget.dart';
-import 'package:flutter_app/src/features/widget_catalog/presentation/widgets/Animations/tween_animation_builder.dart';
+import 'package:flutter_app/src/features/widget_catalog/presentation/widgets/animations/animated_container.dart';
+import 'package:flutter_app/src/features/widget_catalog/presentation/widgets/animations/animated_logo_builder.dart';
+import 'package:flutter_app/src/features/widget_catalog/presentation/widgets/animations/animated_logo_widget.dart';
+import 'package:flutter_app/src/features/widget_catalog/presentation/widgets/animations/tween_animation_builder.dart';
 
 class AnimationsScreen extends StatefulWidget {
   const AnimationsScreen({super.key});

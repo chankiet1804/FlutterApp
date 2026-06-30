@@ -3,7 +3,7 @@ import 'package:flutter_app/src/state/counter_provider.dart';
 import 'package:provider/provider.dart';
 import '../features/widget_catalog/presentation/screens/widgets_screen.dart';
 import '../features/home/presentation/screens/home_screen.dart';
-import '../features/settings/presentation/settings_screen.dart';
+import '../features/settings/presentation/screens/settings_screen.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({super.key});
