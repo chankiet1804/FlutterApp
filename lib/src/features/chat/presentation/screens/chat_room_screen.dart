@@ -57,8 +57,37 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
     return Scaffold(
-      appBar: AppBar(title: Text(widget.otherName)),
+      appBar: AppBar(
+        titleSpacing: 0,
+        title: Row(
+          children: [
+            CircleAvatar(
+              radius: 18,
+              backgroundColor: scheme.primaryContainer,
+              child: Text(
+                widget.otherName.isNotEmpty
+                    ? widget.otherName[0].toUpperCase()
+                    : '?',
+                style: TextStyle(
+                  color: scheme.onPrimaryContainer,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                widget.otherName,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
+      ),
       body: Column(
         children: [
           Expanded(
@@ -71,7 +100,10 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                   stream: _service.streamMessages(_chatId),
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
-                      return const Center(child: Text('Đã có lỗi xảy ra'));
+                      return const _RoomMessage(
+                        icon: Icons.error_outline,
+                        text: 'Đã có lỗi xảy ra',
+                      );
                     }
                     if (!snapshot.hasData) {
                       return const Center(child: CircularProgressIndicator());
@@ -79,8 +111,9 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
 
                     final messages = snapshot.data!;
                     if (messages.isEmpty) {
-                      return const Center(
-                        child: Text('Chưa có tin nhắn. Hãy bắt đầu trò chuyện!'),
+                      return const _RoomMessage(
+                        icon: Icons.chat_bubble_outline,
+                        text: 'Chưa có tin nhắn.\nHãy bắt đầu trò chuyện!',
                       );
                     }
 
@@ -93,6 +126,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
 
                     return ListView.builder(
                       reverse: true,
+                      padding: const EdgeInsets.symmetric(vertical: 12),
                       itemCount: messages.length,
                       itemBuilder: (context, index) {
                         final msg = messages[index];
@@ -118,6 +152,36 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
           ),
           ChatInput(onSend: _send),
         ],
+      ),
+    );
+  }
+}
+
+/// Thông báo trạng thái căn giữa trong phòng chat (rỗng / lỗi).
+class _RoomMessage extends StatelessWidget {
+  final IconData icon;
+  final String text;
+
+  const _RoomMessage({required this.icon, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 64, color: scheme.outline),
+            const SizedBox(height: 12),
+            Text(
+              text,
+              textAlign: TextAlign.center,
+              style: TextStyle(color: scheme.onSurfaceVariant),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -17,18 +17,26 @@ class ChatListScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Tin nhắn')),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: () => Navigator.push(
           context,
           MaterialPageRoute<void>(builder: (_) => const UserSearchScreen()),
         ),
-        child: const Icon(Icons.add_comment),
+        icon: const Icon(Icons.edit_outlined),
+        label: const Text('Tin nhắn mới'),
       ),
       body: StreamBuilder<List<Chat>>(
         stream: service.streamMyChats(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return const Center(child: Text('Đã có lỗi xảy ra'));
+            // Log lỗi thật ra terminal để trace (StreamBuilder nuốt mất nguyên nhân).
+            debugPrint('streamMyChats error: ${snapshot.error}');
+            debugPrintStack(stackTrace: snapshot.stackTrace);
+            return _CenteredState(
+              icon: Icons.error_outline,
+              title: 'Đã có lỗi xảy ra',
+              subtitle: 'Không tải được danh sách trò chuyện.',
+            );
           }
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
@@ -36,13 +44,21 @@ class ChatListScreen extends StatelessWidget {
 
           final chats = snapshot.data!;
           if (chats.isEmpty) {
-            return const Center(
-              child: Text('Chưa có cuộc trò chuyện nào.\nNhấn + để bắt đầu.'),
+            return const _CenteredState(
+              icon: Icons.forum_outlined,
+              title: 'Chưa có cuộc trò chuyện nào',
+              subtitle: 'Nhấn "Tin nhắn mới" để bắt đầu.',
             );
           }
 
-          return ListView.builder(
+          return ListView.separated(
+            padding: const EdgeInsets.symmetric(vertical: 8),
             itemCount: chats.length,
+            separatorBuilder: (context, index) => const Divider(
+              height: 1,
+              indent: 84,
+              endIndent: 16,
+            ),
             itemBuilder: (context, index) {
               final chat = chats[index];
               return ChatTile(
@@ -61,6 +77,47 @@ class ChatListScreen extends StatelessWidget {
             },
           );
         },
+      ),
+    );
+  }
+}
+
+/// Trạng thái rỗng / lỗi căn giữa, dùng chung cho inbox.
+class _CenteredState extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String subtitle;
+
+  const _CenteredState({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 72, color: scheme.outline),
+            const SizedBox(height: 16),
+            Text(
+              title,
+              style: Theme.of(context).textTheme.titleMedium,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 6),
+            Text(
+              subtitle,
+              style: TextStyle(color: scheme.onSurfaceVariant),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       ),
     );
   }

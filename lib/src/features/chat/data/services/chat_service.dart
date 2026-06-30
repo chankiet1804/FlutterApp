@@ -92,23 +92,39 @@ class ChatService {
     }, SetOptions(merge: true));
   }
 
-  /// Tìm user theo username (prefix search trên `username_lowercase`).
+  /// Tìm user theo username hoặc displayName (chứa [query], không phân biệt hoa
+  /// thường). Lọc phía client để bao được cả user doc cũ thiếu
+  /// `username_lowercase` — phù hợp quy mô nhỏ của app.
   Future<List<AppUser>> searchUsersByUsername(String query) async {
     final q = query.trim().toLowerCase();
     if (q.isEmpty) return [];
 
-    // Range query [q, q + '') để tìm theo tiền tố.
-    final snap = await _db
-        .collection('users')
-        .orderBy('username_lowercase')
-        .startAt([q])
-        .endAt(['$q'])
-        .limit(20)
-        .get();
+    final snap = await _db.collection('users').limit(50).get();
 
-    return snap.docs
-        .map((d) => AppUser.fromMap(d.data()))
-        .where((u) => u.uid != _myUid) // loại bỏ chính mình
-        .toList();
+    final results = <AppUser>[];
+    for (final doc in snap.docs) {
+      if (doc.id == _myUid) continue; // loại bỏ chính mình
+      final data = doc.data();
+      final username = (data['username'] as String? ?? '').toLowerCase();
+      final displayName = (data['displayName'] as String? ?? '').toLowerCase();
+      if (username.contains(q) || displayName.contains(q)) {
+        results.add(_userFromDoc(doc.id, data));
+      }
+    }
+    return results;
+  }
+
+  /// Map user doc "khoan dung": bù field thiếu ở doc cũ để không crash như
+  /// `AppUser.fromMap` (vốn yêu cầu field bắt buộc).
+  AppUser _userFromDoc(String id, Map<String, dynamic> data) {
+    final username = data['username'] as String? ?? '';
+    return AppUser(
+      uid: data['uid'] as String? ?? id,
+      email: data['email'] as String? ?? '',
+      username: username,
+      displayName: data['displayName'] as String? ?? username,
+      photoURL: data['photoURL'] as String?,
+      createdAt: (data['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
+    );
   }
 }

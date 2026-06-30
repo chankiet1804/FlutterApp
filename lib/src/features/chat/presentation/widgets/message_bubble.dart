@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/features/chat/data/models/message_model.dart';
+import 'package:flutter_app/src/features/chat/presentation/utils/time_format.dart';
 
 /// Bong bóng một tin nhắn. Tin của tôi nằm phải, người kia nằm trái.
 class MessageBubble extends StatelessWidget {
@@ -23,33 +24,62 @@ class MessageBubble extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final bubbleColor = isMine ? scheme.primary : scheme.surfaceContainerHighest;
     final textColor = isMine ? scheme.onPrimary : scheme.onSurface;
+    final metaColor = isMine
+        ? scheme.onPrimary.withValues(alpha: 0.75)
+        : scheme.onSurfaceVariant;
 
-    return Column(
-      crossAxisAlignment: isMine
-          ? CrossAxisAlignment.end
-          : CrossAxisAlignment.start,
-      children: [
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+    final time =
+        message.createdAt != null ? formatMessageTime(message.createdAt!) : '';
+    const radius = Radius.circular(18);
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+      child: Align(
+        alignment: isMine ? Alignment.centerRight : Alignment.centerLeft,
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(14, 9, 12, 8),
           constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width * 0.75,
+            maxWidth: MediaQuery.of(context).size.width * 0.76,
           ),
           decoration: BoxDecoration(
             color: bubbleColor,
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Text(message.text, style: TextStyle(color: textColor)),
-        ),
-        if (showStatus)
-          Padding(
-            padding: const EdgeInsets.only(right: 12, bottom: 4),
-            child: Text(
-              seen ? 'Đã xem' : 'Đã gửi',
-              style: Theme.of(context).textTheme.labelSmall,
+            borderRadius: BorderRadius.only(
+              topLeft: radius,
+              topRight: radius,
+              bottomLeft: isMine ? radius : const Radius.circular(4),
+              bottomRight: isMine ? const Radius.circular(4) : radius,
             ),
           ),
-      ],
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                message.text,
+                style: TextStyle(color: textColor, fontSize: 15, height: 1.25),
+              ),
+              const SizedBox(height: 2),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    time,
+                    style: TextStyle(color: metaColor, fontSize: 11),
+                  ),
+                  if (isMine && showStatus) ...[
+                    const SizedBox(width: 3),
+                    Icon(
+                      seen ? Icons.done_all : Icons.done,
+                      size: 15,
+                      color: seen ? scheme.onPrimary : metaColor,
+                    ),
+                  ],
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

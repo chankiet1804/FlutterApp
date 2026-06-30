@@ -10,27 +10,35 @@ service cloud.firestore {
 
     match /chats/{chatId} {
       // chatId = sort(uidA, uidB).join("_") -> 2 thành viên nằm ngay trong id.
-      // Dùng id để xác thực => không cần get() và không vỡ ở tin nhắn đầu tiên.
+      // Xác thực bằng id thay vì resource.data: hoạt động kể cả khi doc chưa
+      // tồn tại (mở phòng chat mới) -> không bị permission-denied giả.
+      function isMember() {
+        return request.auth != null && request.auth.uid in chatId.split('_');
+      }
+      // participants phải đúng 2 thành viên suy từ chatId -> chống giả mạo
+      // metadata (chèn/đổi participants, bơm unreadCount của người khác...).
+      // hasOnly không phụ thuộc thứ tự nên sendMessage của cả 2 phía đều hợp lệ;
+      // markAsRead dùng merge không đụng participants nên vẫn giữ đủ 2 thành viên.
+      function validParticipants() {
+        return request.resource.data.participants is list
+            && request.resource.data.participants.size() == 2
+            && request.resource.data.participants.hasOnly(chatId.split('_'));
+      }
 
-      // Chỉ thành viên trong cuộc chat mới đọc metadata.
-      allow read: if request.auth != null
+      // get 1 doc (mở phòng): xác thực bằng chatId -> không vỡ khi doc chưa tồn tại.
+      allow get: if isMember();
+      // list (query inbox: where participants arrayContains uid): phải dựa trên
+      // resource.data.participants để Firestore xác thực được tập kết quả của query.
+      allow list: if request.auth != null
                   && request.auth.uid in resource.data.participants;
-      // Tạo mới: người tạo phải là 1 trong 2 uid của chatId và tự đưa mình vào participants.
-      allow create: if request.auth != null
-                  && request.auth.uid in chatId.split('_')
-                  && request.auth.uid in request.resource.data.participants;
-      // Cập nhật: phải đang là thành viên và không được đổi danh sách participants.
-      allow update: if request.auth != null
-                  && request.auth.uid in resource.data.participants
-                  && request.resource.data.participants == resource.data.participants;
+      // Tạo/sửa metadata: phải là thành viên và participants hợp lệ.
+      allow create, update: if isMember() && validParticipants();
 
       match /messages/{messageId} {
-        allow read: if request.auth != null
-            && request.auth.uid in get(/databases/$(database)/documents/chats/$(chatId)).data.participants;
-        // Người gửi phải là chính mình VÀ là thành viên của cuộc chat (suy từ chatId).
-        allow create: if request.auth != null
-            && request.auth.uid == request.resource.data.senderId
-            && request.auth.uid in chatId.split('_');
+        allow read: if isMember();
+        // Người gửi phải là chính mình VÀ là thành viên của cuộc chat.
+        allow create: if isMember()
+            && request.auth.uid == request.resource.data.senderId;
       }
     }
   }
